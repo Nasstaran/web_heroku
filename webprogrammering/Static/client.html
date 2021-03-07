@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+
+<html lang="sv">
+    <head>
+      <title>Twidder</title>
+      <meta charset="utf-8"/>
+      <link href="client.css" type="text/css" rel="stylesheet">
+      <script src="client.js" type="text/javascript"></script>
+      <script type="text/view" id="welcomeview">
+
+        <div class="completeDiv">
+          <img src="wimage.png" >
+          <div class="SecondDiv">
+            <div class="LoginDiv">
+
+              <form class="LoginForm" onsubmit="LogIn()" action="javascript:void">
+
+                <label>Email:
+                  <input type="email" name="email" id="LoginEmail" required>
+                </label>
+                <label>Password:
+                  <input type="password" name="password" id="LoginPassword" minlength="6" required>
+                </label>
+                <input type="submit" value="login">
+              </form>
+              <div class="Error" id="ErrorId1"></div>
+            </div>
+
+            <div class="SignupDiv">
+              <p class="SignupStyle">
+                Sign up here
+              </p>
+              <form class="SigninForm"  onsubmit="return signup()" action="javascript:void">
+                <label>First name:
+                  <input type="text" name="name" id="SigninName" required>
+                </label>
+                <label>Last name:
+                  <input type="text" name="familyname" id="SigninFamilyname" required>
+                </label>
+                <label>Gender:
+                  <select type="gender" name="gender" id="SigninGender" required>
+                    <option value="none"></option>
+                    <option value="female">Female</option>
+                    <option value="male">Male</option>
+                    <option value="other">Other</option>
+                  </select>
+                </label>
+
+                <label>City:
+                  <input type="text" name="city" id="city" required>
+                </label>
+
+                <label>Country:
+                  <input type="text" name="country" id="country" required>
+                </label>
+
+                <label>Email:
+                  <input type="email" name="email" id="SigninEmail" required>
+                </label>
+
+                <label>Password:
+                  <input type="password" name="password1" id="SigninPassword1" minlength="6" required>
+                </label>
+
+                <label>Repeat PSW:
+                  <input type="password" name="password2" id="SigninPassword2" minlength="6" required>
+                </label>
+
+                  <input type="submit" value="SignUp">
+              </form>
+                <div class="error2" id="ErrorId2"></div>
+            </div>
+          </div>
+        </div>
+      </script>
+      <script type="text/view" id="profileview">
+        <div class="profileClass">
+          <div class="tab">
+            <button class="tablinks" onclick="openTab(event, 'Home')">Home</button>
+            <button class="tablinks" onclick="openTab(event, 'Browse')">Browse</button>
+            <button class="tablinks" onclick="openTab(event, 'Account')">Account</button>
+          </div>
+          <div id="Home" class="tabActive">
+            <p class="SignupStyle">
+              Homepage
+            </p>
+            <div class="ProfileInfo">
+              <div class="AdjustDiv" id="HomEmail"></div>
+              <label class="SignupStyle2">
+                Email:
+              </label>
+              <div class="AdjustDiv" id="HomName"></div>
+              <label class="SignupStyle2">
+                First name:
+              </label>
+              <div class="AdjustDiv" id="HomFamily"></div>
+              <label class="SignupStyle2">
+                Last name:
+              </label>
+              <div class="AdjustDiv" id="HomGender"></div>
+              <label class="SignupStyle2">
+                Gender:
+              </label>
+              <div class="AdjustDiv" id="HomCity"></div>
+              <label class="SignupStyle2">
+                City:
+              </label>
+              <div class="AdjustDiv" id="HomCountry"></div>
+              <label class="SignupStyle2">
+                Country:
+              </label>
+            </div>
+            <div class="wall-layout">
+              <label class="generic-text">Write a message:</label>
+              <textarea id="usermessage" rows="3" cols="28" class="textArea"></textarea><br>
+              <button type="wall" onclick="post_message_my()">Post message</button>
+              <div class="error2" id="ErrorId3"></div>
+              <br><label class="generic-text">Your Twidder wall:</label>
+            <button type="wall" onclick="refreshWall()">Refresh wall</button>
+              <div class="error2" id="ErrorId6"></div>
+              <div class="messageWall-layout" id="writingWall"></div>
+            </div>
+          </div>
+          <div id="Browse" class="tabActive">
+            <p class="SignupStyle">
+              Browse Twidder
+            </p>
+            <label class="SignupStyle2">Search user by Email:
+              <input type="text" id="emailSearch"></input>
+              <button id="search-button" onclick="displaySearchData()">Search user</button>
+                <div class="error3" id="ErrorId5"></div>
+            </label>
+            <div class="browseClass" id="browseC">
+              <div class="ProfileInfo2">
+                <div class="AdjustDiv" id="browseEmail"></div>
+                <label class="SignupStyle2">
+                  Email:
+                </label>
+                <div class="AdjustDiv" id="browseName"></div>
+                <label class="SignupStyle2">
+                  First name:
+                </label>
+                <div class="AdjustDiv" id="browseFamily"></div>
+                <label class="SignupStyle2">
+                  Last name:
+                </label>
+                <div class="AdjustDiv" id="browseGender"></div>
+                <label class="SignupStyle2">
+                  Gender:
+                </label>
+                <div class="AdjustDiv" id="browseCity"></div>
+                <label class="SignupStyle2">
+                  City:
+                </label>
+                <div class="AdjustDiv" id="browseCountry"></div>
+                <label class="SignupStyle2">
+                  Country:
+                </label>
+              </div>
+              <div class="searchWall">
+                <label class="generic-text">Write a message:</label>
+
+                <textarea rows="3" id="message" class="textArea"></textarea><br>
+
+                <button type="wall" onclick="post_message_searched()">Post message</button>
+
+                <div class="error2" id="ErrorId4"></div>
+
+                <br><div class="generic-text" id="browseName2"></div>
+
+              <button type="wall" onclick="refresh_search_Wall()">Refresh wall</button>
+                <div class="S_messageWall" id="S_writingWall"></div>
+              </div>
+            </div>
+          </div>
+          <div id="Account" class="tabActive">
+            <p class="SignupStyle">
+              Account page
+              </p>
+            <div class="tab3-layout">
+            <p class="SignupStyle2">Change password</p>
+            <label>Current password:
+              <input  class="password2" type="password" name="accountPassword" id="accountPassword">
+            </label>
+            <label>New password:
+              <input type="password" name="newPSW" id="newPSW">
+            </label>
+            <label>Confirm password:
+              <input type="password" name="confPSW" id="confPSW">
+            </label>
+            <br>
+            <button onclick="return changepassword()">Change password</button>
+            <div class="changePass" id="changePass"></div>
+            <br>
+            <button onclick="signout()">Sign Out</button>
+            </div>
+          </div>
+        </div>
+      </script>
+    </head>
+    <body>
+      <div id="view"> </div>
+    </body>
+</html>

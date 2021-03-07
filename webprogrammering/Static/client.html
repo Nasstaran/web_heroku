@@ -25,6 +25,18 @@
               </form>
               <div class="Error" id="ErrorId1"></div>
             </div>
+            <!-- // password recovery -->
+            <div class="forgotpasswordDiv">
+
+              <form class="LoginForm" onsubmit="password_recovery()" action="javascript:void">
+                <label>Email:
+                  <input type="email" name="recoveryemail" id="recoveryEmail" required>
+                </label>
+                <input type="submit" id="recovery_button" value="Recover Password">
+              </form>
+              <div class="Error" id="ErrorId8"></div>
+            </div>
+
 
             <div class="SignupDiv">
               <p class="SignupStyle">
@@ -85,27 +97,27 @@
               Homepage
             </p>
             <div class="ProfileInfo">
-              <div class="AdjustDiv" id="HomEmail"></div>
+              <div class="AdjustDiv" id="HomEmail" draggable="true" ondragstart="startdrag(event)"></div>
               <label class="SignupStyle2">
                 Email:
               </label>
-              <div class="AdjustDiv" id="HomName"></div>
+              <div class="AdjustDiv" id="HomName" draggable="true" ondragstart="startdrag(event)"></div>
               <label class="SignupStyle2">
                 First name:
               </label>
-              <div class="AdjustDiv" id="HomFamily"></div>
+              <div class="AdjustDiv" id="HomFamily" draggable="true" ondragstart="startdrag(event)"></div>
               <label class="SignupStyle2">
                 Last name:
               </label>
-              <div class="AdjustDiv" id="HomGender"></div>
+              <div class="AdjustDiv" id="HomGender" draggable="true" ondragstart="startdrag(event)"></div>
               <label class="SignupStyle2">
                 Gender:
               </label>
-              <div class="AdjustDiv" id="HomCity"></div>
+              <div class="AdjustDiv" id="HomCity" draggable="true" ondragstart="startdrag(event)"></div>
               <label class="SignupStyle2">
                 City:
               </label>
-              <div class="AdjustDiv" id="HomCountry"></div>
+              <div class="AdjustDiv" id="HomCountry" draggable="true" ondragstart="startdrag(event)"></div>
               <label class="SignupStyle2">
                 Country:
               </label>
@@ -118,7 +130,7 @@
               <br><label class="generic-text">Your Twidder wall:</label>
             <button type="wall" onclick="refreshWall()">Refresh wall</button>
               <div class="error2" id="ErrorId6"></div>
-              <div class="messageWall-layout" id="writingWall"></div>
+              <div class="messageWall-layout" id="writingWall" draggable="true" ondragstart="startdrag(event)" ondrop="dropped(event)"></div>
             </div>
           </div>
           <div id="Browse" class="tabActive">

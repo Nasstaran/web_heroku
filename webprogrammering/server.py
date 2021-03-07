@@ -46,31 +46,45 @@ def api():
 
     return ""
 
+def generate_new_password():
+    password = ''.join((secrets.choice(string.ascii_lowercase + string.digits) for i in range(8)))
+    print("new_password", password)
+    return password
+
 @app.route('/passwordrecovery', methods = ['POST'])
 def password_recovery():
-    os.environ['API_PASSWORD'] = 'schemiloans2'
-    # email = get user email()
+    data = request.get_json()
+    user = database_helper.get_user_all(data['email'])
+    print("recovery email:",user)
+    if user['success']:
+        new_password = generate_new_password();
+        database_helper.change_password(data['email'], new_password)
+        if send_email(data['email'], new_password):
+            return json.dumps({"success": True, "message": "New Password sent."})
+        json.dumps({"success": False, "message": "Wrong email."})
+
+
+
+def send_email(email,new_p):
     print("passwordrecovery")
     try:
         message = "\r\n".join([
-        "From: user_me@gmail.com",
-        "To: user_you@gmail.com",
-        "Subject: Just a message",
+        "From: twidder_support@gmail.com",
+        "To: "+ email,
+        "Subject: Your new Twidder password",
         "",
-        "you new password is : abcde1234"
+        "you new password is : "+ new_p
         ])
         server = smtplib.SMTP('64.233.184.108', 587)#måste vara port 587
         server.ehlo()
         server.starttls()
-        server.login("s3holic@gmail.com", "PASSWORD")
-        server.sendmail("s3holic@gmail.com", "hamedowns@gmail.com", message)
+        server.login("s3holic@gmail.com", "smptserverpassword123willchangeafter")
+        server.sendmail("s3holic@gmail.com", email, message)
         server.close()
-        return json.dumps({"success": True, "message": "Email sent."})
+        return True
     except Exception as e:
         print(str(e))
-        return json.dumps({"success": False, "message": "Email not sent."})
-
-
+        return False
 
 #alternatively create a new viev where the user can insert their new password
 
@@ -80,7 +94,7 @@ def sign_in():
     data = request.get_json()
     user = database_helper.get_user_all(data["email"])
     print("user_all", user)
-    if user:
+    if user['success']:
         email = user["email"]
         if email in online_users:
             print("online_users: ", online_users)
@@ -104,7 +118,7 @@ def sign_in():
 def sign_up():
     data = request.get_json()
     user = database_helper.get_user_without_pass(data["email"])
-    if user:
+    if user['success']:
         return jsonify({"success": False, "message": "Email is already in use!"})
 
     if validate_signup(data):

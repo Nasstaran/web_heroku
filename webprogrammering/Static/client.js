@@ -12,16 +12,28 @@ window.onload = function(){
    {
     let last_active_tab = window.localStorage.last_active_tab;
     displayView(profileview);
+
     openTab(event, last_active_tab);
     WriteInfo();
     ShowMessages();
-        console.log("1asdasdasd4")
+
   }
   else{
 
       displayView(welcomeview);
   }
 };
+
+function startdrag(e){
+  var current_id = document.getElementById(e.target.id).innerHTML;
+  e.dataTransfer.setData('text/plain',current_id );
+}
+
+function dropped(e){
+  e.preventDefault();
+  dropbox.innerHTML = e.dataTransfer.getData('text/plain')
+}
+
 
 socket_connection = function(){
     socket = new WebSocket("ws://127.0.0.1:5000/api");
@@ -103,12 +115,13 @@ ShowMessages = function(){
 	if(this.readyState == 4 && this.status == 200) {
 	    let Recieve_data = JSON.parse(this.responseText);
 	    for(i=Recieve_data.data.length-1; i>0; --i){
-		resultMessage += Recieve_data.data[i].writer + ': ' + Recieve_data.data[i].content + '<br>';
+		resultMessage += Recieve_data.data[i].writer + ': ' + Recieve_data.data[i].content + '<br>'+ "\n";
     }
     document.getElementById("writingWall").innerHTML = resultMessage;
     console.log("rresult ---");
     return true;
   }
+
   };
   xhttp.open('GET', '/getusermessagesbytoken', true);
   xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
@@ -157,8 +170,28 @@ confirmPSW = function(){
     return false;
   }
 };
-
-
+//recover password
+password_recovery = function()
+{
+  let recoveryemail = {
+    email: document.getElementById("recoveryEmail").value
+  }
+  xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if(this.readyState == 4 && this.status == 200) {
+      res = JSON.parse(this.responseText);
+      if(res.success == true) {
+        document.getElementById("ErrorId8").innerHTML = res.message;
+      } else{
+        document.getElementById("ErrorId8").innerHTML = res.message;
+      }
+    }
+  };
+  xhttp.open('POST', '/passwordrecovery', true);
+  xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+  xhttp.send(JSON.stringify(recoveryemail));
+  return false;
+}
 // Login knapp
 LogIn = function(){
   let userform = {

@@ -33,7 +33,7 @@ def get_user_all(email):
     #result = dict()
     if rows != []:
         for index in range(len(rows)):
-            result = {'email': rows[index][0], 'password': rows[index][1], 'firstname': rows[index][2], 'lastname': rows[index][3], 'gender': rows[index][4], 'city': rows[index][5], 'country': rows[index][6]}
+            result = {'success': True, 'email': rows[index][0], 'password': rows[index][1], 'firstname': rows[index][2], 'lastname': rows[index][3], 'gender': rows[index][4], 'city': rows[index][5], 'country': rows[index][6]}
         return result
     else:
         result = {'success': False}
@@ -46,7 +46,7 @@ def get_user_without_pass(email):
     #result = dict()
     if rows != []:
         for index in range(len(rows)):
-            result = {'email': rows[index][0], 'firstname': rows[index][2], 'lastname': rows[index][3], 'gender': rows[index][4], 'city': rows[index][5], 'country': rows[index][6]}
+            result = {'success': True, 'email': rows[index][0], 'firstname': rows[index][2], 'lastname': rows[index][3], 'gender': rows[index][4], 'city': rows[index][5], 'country': rows[index][6]}
             return result
     else:
         result = {'success': False}
